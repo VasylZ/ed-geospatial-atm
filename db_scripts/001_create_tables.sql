@@ -1,57 +1,57 @@
--- CREATE EXTENSION IF NOT EXISTS postgis;
---
--- create table streets
--- (
---     osm_id   varchar not null
---         primary key,
---     geom     geometry(MultiLineString, 4326),
---     code     integer,
---     fclass   varchar(28),
---     name     varchar(100),
---     ref      varchar(20),
---     oneway   varchar(1),
---     maxspeed integer,
---     layer    double precision,
---     bridge   varchar(1),
---     tunnel   varchar(1)
--- );
---
--- alter table streets
---     owner to postgres;
---
--- create index sidx_streets_geom
---     on streets using gist (geom);
---
--- create table buildings
--- (
---     osm_id varchar not null
---         primary key,
---     geom   geometry(MultiPolygon, 4326),
---     code   integer,
---     fclass varchar(28),
---     name   varchar(100),
---     type   varchar(20)
--- );
---
--- alter table buildings
---     owner to postgres;
---
--- create index sidx_buildings_geom
---     on buildings using gist (geom);
---
--- create table areas
--- (
---     id       serial
---         primary key,
---     geom     geometry(Polygon, 4326),
---     objectid integer,
---     globalid varchar,
---     name1    varchar
--- );
---
--- alter table areas
---     owner to postgres;
---
+CREATE EXTENSION IF NOT EXISTS postgis;
+
+create table streets
+(
+    osm_id   varchar not null
+        primary key,
+    geom     geometry(MultiLineString, 4326),
+    code     integer,
+    fclass   varchar(28),
+    name     varchar(100),
+    ref      varchar(20),
+    oneway   varchar(1),
+    maxspeed integer,
+    layer    double precision,
+    bridge   varchar(1),
+    tunnel   varchar(1)
+);
+
+alter table streets
+    owner to postgres;
+
+create index sidx_streets_geom
+    on streets using gist (geom);
+
+create table buildings
+(
+    osm_id varchar not null
+        primary key,
+    geom   geometry(MultiPolygon, 4326),
+    code   integer,
+    fclass varchar(28),
+    name   varchar(100),
+    type   varchar(20)
+);
+
+alter table buildings
+    owner to postgres;
+
+create index sidx_buildings_geom
+    on buildings using gist (geom);
+
+create table areas
+(
+    id       serial
+        primary key,
+    geom     geometry(Polygon, 4326),
+    objectid integer,
+    globalid varchar,
+    name1    varchar
+);
+
+alter table areas
+    owner to postgres;
+
 create table atms
 (
     id          uuid                                    not null
