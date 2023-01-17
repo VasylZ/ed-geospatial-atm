@@ -45,6 +45,8 @@ docker run --rm -it -e "dbHost=${ED_HOST_IP}" -e "kafkaBootstrapServers=${ED_HOS
 ```
 
 ## REST API 
+Application already hosted here:
+
 #### writer http://ed-geospatial.myset.io:8091
 #### reader http://ed-geospatial.myset.io:8090
 
