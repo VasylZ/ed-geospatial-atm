@@ -31,7 +31,7 @@ docker push vasyldockeracc/ed-processing:latest
 
 ## Run project
 Execute DB scrips from ``db_migratin`` folder.<br />
-Run docker compose files in ``docker_compose`` folder or containers separately from compose files just ``replace dbHost and kafkaBootstrapServers`` to ip address of your localhost machine
+Run docker compose files in ``docker_compose`` folder or containers separately from compose files just ``replace ED_HOST_IP variable`` with ip address of your localhost machine
 ```
 export ED_HOST_IP=192.168.2.10
 docker run --rm -it -e "dbHost=${ED_HOST_IP}" -e "kafkaBootstrapServers=${ED_HOST_IP}:9092" -p 8081:8081 --name ed-writer-web vasyldockeracc/ed-writer-web
