@@ -36,6 +36,7 @@ docker push vasyldockeracc/ed-processing:latest
 <br />
 - Run application docker containers ``ed-writer-web``, ``ed-reader-web`` and ``ed-processing`` using compose file ``docker_compose/ed-atm-compose.yml`` or run containers separately from compose files just ``replace ED_HOST_IP variable`` with ip address of your host machine.
 <br />
+
 ```
 export ED_HOST_IP=192.168.2.10
 docker run --rm -it -e "dbHost=${ED_HOST_IP}" -e "kafkaBootstrapServers=${ED_HOST_IP}:9092" -p 8081:8081 --name ed-writer-web vasyldockeracc/ed-writer-web
