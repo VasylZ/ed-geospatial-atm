@@ -32,7 +32,7 @@ docker push vasyldockeracc/ed-processing:latest
 ## Run project
 - Pick up infrastructure docker containers ``postgis``, ``kafka``, ``zookeeper`` and ``aerospike`` using compose file ``docker_compose/infra-compose.yml``
 - Execute DB scrips from ``db_scripts`` folder.
-- Run application docker containers ``ed-writer-web``, ``ed-reader-web`` and ``ed-processing`` using compose file ``docker_compose/ed-atm-compose.yml`` or run containers separately from compose files just ``replace ED_HOST_IP variable`` with ip address of your host machine.
+- Run application docker containers ``ed-writer-web``, ``ed-reader-web`` and ``ed-processing`` using compose file ``docker_compose/ed-atm-compose.yml`` or run containers separately using next commands just ``replace ED_HOST_IP variable`` with ip address of your host machine.
 
 ```
 export ED_HOST_IP=192.168.2.10
