@@ -1,0 +1,35 @@
+version: '3.9'
+services:
+
+  ed-reader-web:
+    image: vasyldockeracc/ed-reader-web
+    #    depends_on:
+    #      - postgres
+    environment:
+      dbHost: postgres
+      aDbHost: aerospike
+    ports:
+      - "8090:8080"
+
+  ed-writer-web:
+    image: vasyldockeracc/ed-writer-web
+    #    depends_on:
+    #      - ed-processing
+    #      - postgres
+    #      - kafka
+    ports:
+      - 8091:8081
+    environment:
+      dbHost: postgres
+      aDbHost: aerospike
+      kafkaBootstrapServers: kafka:9092
+
+  ed-processing:
+    image: vasyldockeracc/ed-processing
+    #    depends_on:
+    #      - postgres
+    #      - kafka
+    environment:
+      dbHost: postgres
+      aDbHost: aerospike
+      kafkaBootstrapServers: kafka:9092

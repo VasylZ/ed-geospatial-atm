@@ -1,0 +1,10 @@
+{
+  "topic" : "modification-processing",
+  "groupId" : "modificationGroup",
+  "autoOffsetReset" : "earliest",
+  "prod" : {
+    "topic" : "modification-processing",
+    "groupId" : "modificationGroup",
+    "autoOffsetReset" : "earliest"
+  }
+}

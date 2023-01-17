@@ -1,0 +1,6 @@
+{
+  "kafkaBootstrapServers" : "localhost:9092",
+  "prod" : {
+    "kafkaBootstrapServers" : "localhost:9092"
+  }
+}

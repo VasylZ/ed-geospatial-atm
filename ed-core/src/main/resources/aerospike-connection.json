@@ -1,0 +1,8 @@
+{
+  "aDbHost" : "localhost",
+  "aDbPort" : 3000,
+  "aNamespace" : "gis",
+  "aSet" : "atm",
+  "aMaxConnsPerNode" : 500,
+  "aConnPoolsPerNode" : 2
+}

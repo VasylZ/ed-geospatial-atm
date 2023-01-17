@@ -1,0 +1,6 @@
+{
+  "host" : "http://localhost:8081",
+  "prod" : {
+    "host" : "http://localhost:8081"
+  }
+}
