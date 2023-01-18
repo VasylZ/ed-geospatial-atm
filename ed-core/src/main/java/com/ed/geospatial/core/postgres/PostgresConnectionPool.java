@@ -46,7 +46,7 @@ public class PostgresConnectionPool {
         props.setProperty("dataSource.user", config.getString("dbUser"));
         props.setProperty("dataSource.password", config.getString("dbPassword"));
         props.setProperty("dataSource.databaseName", db);
-        props.setProperty("maximumPoolSize", String.valueOf(4));
+        props.setProperty("maximumPoolSize", String.valueOf(100));
 
         HikariConfig hikariConfig = new HikariConfig(props);
         dataSource = new HikariDataSource(hikariConfig);

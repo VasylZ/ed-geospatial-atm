@@ -15,17 +15,17 @@ maven clean package
 ## Dockerize
 Writer
 ```
-docker image build --platform=linux/amd64 --tag vasyldockeracc/ed-writer-web:latest .
+docker image build --platform=linux/amd64 --tag vasyldockeracc/ed-writer-web:latest ./ed-writer-web
 docker push vasyldockeracc/ed-writer-web:latest
-```
+``` hny
 Reader
 ```
-docker image build --platform=linux/amd64 --tag vasyldockeracc/ed-reader-web:latest .
+docker image build --platform=linux/amd64 --tag vasyldockeracc/ed-reader-web:latest ./ed-reader-web
 docker push vasyldockeracc/ed-reader-web:latest
 ```
 Processing
 ```
-docker image build --platform=linux/amd64 --tag vasyldockeracc/ed-processing:latest .
+docker image build --platform=linux/amd64 --tag vasyldockeracc/ed-processing:latest ./ed-processing
 docker push vasyldockeracc/ed-processing:latest
 ```
 

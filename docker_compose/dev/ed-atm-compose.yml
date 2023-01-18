@@ -1,0 +1,26 @@
+version: '3.9'
+services:
+
+  ed-reader-web:
+    image: vasyldockeracc/ed-reader-web
+    ports:
+      - "8080:8080"
+    environment:
+      dbHost: 192.168.2.10
+      aDbHost: 192.168.2.10
+
+  ed-writer-web:
+    image: vasyldockeracc/ed-writer-web
+    ports:
+      - 8081:8081
+    environment:
+      dbHost: 192.168.2.10
+      aDbHost: 192.168.2.10
+      kafkaBootstrapServers: kafka:9092
+
+  ed-processing:
+    image: vasyldockeracc/ed-processing
+    environment:
+      dbHost: 192.168.2.10
+      aDbHost: 192.168.2.10
+      kafkaBootstrapServers: kafka:9092
