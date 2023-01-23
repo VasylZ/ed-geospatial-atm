@@ -8,7 +8,9 @@ import com.aerospike.client.policy.CommitLevel;
 import com.aerospike.client.policy.QueryPolicy;
 import com.aerospike.client.policy.RecordExistsAction;
 import com.aerospike.client.policy.WritePolicy;
+import com.ed.geospatial.core.shared.ConfUtils;
 import com.ed.geospatial.core.versioning.aerospike.AbstractAerospikeClient;
+import com.typesafe.config.Config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,14 +18,20 @@ import java.util.concurrent.Callable;
 
 public class AtmVersioningServiceAerospikeImpl extends AbstractAerospikeClient implements AtmVersioningService {
 
+    private static final String PERSISTENCE_CONFIG_FILE = "aerospike-versioning-persistence.json";
+
     private static final String ID = "gId";
     private static final String LATEST_COMMITTED_VERSION = "gV";
     private static final String IN_SYNC_VERSION = "gInSyncV";
+
+    private static final Config config = ConfUtils.load(PERSISTENCE_CONFIG_FILE);
 
     private final QueryPolicy queryPolicy;
     private final WritePolicy writePolicy;
 
     public AtmVersioningServiceAerospikeImpl() {
+        super(config.getString("aNamespace"), config.getString("aSet"));
+
         this.queryPolicy = new QueryPolicy();
         this.queryPolicy.totalTimeout = 1_000;
         this.queryPolicy.maxRetries = 2;

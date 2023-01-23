@@ -1,6 +1,18 @@
 {
-  "kafkaBootstrapServers" : "localhost:9092",
-  "prod" : {
-    "kafkaBootstrapServers" : "localhost:9092"
+  "kafkaConsumerHost" : "localhost",
+  "kafkaConsumerPort" : 9092,
+  "kafkaProducerHost" : "localhost",
+  "kafkaProducerPort" : 9092,
+  "docker" : {
+    "kafkaConsumerHost" : "localhost",
+    "kafkaConsumerPort" : 9092,
+    "kafkaProducerHost" : "localhost",
+    "kafkaProducerPort" : 9092
+  },
+  "dockerMySet" : {
+    "kafkaConsumerHost" : "localhost",
+    "kafkaConsumerPort" : 9094,
+    "kafkaProducerHost" : "localhost",
+    "kafkaProducerPort" : 9092
   }
 }

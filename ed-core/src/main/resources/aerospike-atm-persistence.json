@@ -1,0 +1,12 @@
+{
+  "aNamespace" : "gis",
+  "aSet" : "atm_geo",
+  "docker" : {
+    "aNamespace" : "gis",
+    "aSet" : "atm_geo"
+  },
+  "dockerMySet" : {
+    "aNamespace" : "gis",
+    "aSet" : "atm_geo"
+  }
+}

@@ -34,3 +34,5 @@ logs/
 
 # Other
 .DS_Store
+/docker_compose/dev/history/*
+/docker_compose/myset/history/*

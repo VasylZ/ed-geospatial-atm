@@ -13,20 +13,19 @@ maven clean package
 ```
 
 ## Dockerize
-Writer
+Prepare
 ```
-docker image build --platform=linux/amd64 --tag vasyldockeracc/ed-writer-web:latest ./ed-writer-web
-docker push vasyldockeracc/ed-writer-web:latest
-``` hny
-Reader
+export ED_VERSION=latest
+docker image build --platform=linux/amd64 --tag vasyldockeracc/ed-writer-web:${ED_VERSION} ./ed-writer-web
+docker image build --platform=linux/amd64 --tag vasyldockeracc/ed-reader-web:${ED_VERSION} ./ed-reader-web
+docker image build --platform=linux/amd64 --tag vasyldockeracc/ed-processing:${ED_VERSION} ./ed-processing
 ```
-docker image build --platform=linux/amd64 --tag vasyldockeracc/ed-reader-web:latest ./ed-reader-web
-docker push vasyldockeracc/ed-reader-web:latest
+Push
 ```
-Processing
-```
-docker image build --platform=linux/amd64 --tag vasyldockeracc/ed-processing:latest ./ed-processing
-docker push vasyldockeracc/ed-processing:latest
+export ED_VERSION=latest
+docker push vasyldockeracc/ed-writer-web:${ED_VERSION}
+docker push vasyldockeracc/ed-reader-web:${ED_VERSION}
+docker push vasyldockeracc/ed-processing:${ED_VERSION}
 ```
 
 ## Run project
@@ -37,7 +36,7 @@ docker push vasyldockeracc/ed-processing:latest
 ```
 export ED_HOST_IP=192.168.2.10
 docker run --rm -it -e "dbHost=${ED_HOST_IP}" -e "kafkaBootstrapServers=${ED_HOST_IP}:9092" -p 8081:8081 --name ed-writer-web vasyldockeracc/ed-writer-web
-docker run --rm -it -e "dbHost=${ED_HOST_IP}" -p 8080:8080 --name ed-reader-web vasyldockeracc/ed-reader-web
+docker run --rm -it -e "dbHost=${ED_HOST_IP}" -e "aDbHost=${ED_HOST_IP}" -p 8080:8080 --name ed-reader-web vasyldockeracc/ed-reader-web
 docker run --rm -it -e "dbHost=${ED_HOST_IP}" -e "kafkaBootstrapServers=${ED_HOST_IP}:9092" --name ed-processing vasyldockeracc/ed-processing
 ```
 

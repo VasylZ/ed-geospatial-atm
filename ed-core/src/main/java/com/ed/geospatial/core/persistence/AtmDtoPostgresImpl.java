@@ -12,7 +12,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
@@ -101,6 +105,81 @@ public class AtmDtoPostgresImpl implements AtmDto {
         }
     }
 
+    private String createKey(Atm atm) {
+        final String areaId = atm.getArea() != null ? "area_id_" : "";
+        final String streetId = atm.getStreet() != null ? "street_id_" : "";
+        final String buildingId = atm.getBuilding() != null ? "building_id_" : "";
+        return areaId + streetId + buildingId;
+    }
+
+    @Override
+    public List<Atm> create(List<Atm> atms) {
+        return null;
+//        atms.forEach(atm -> atm.setId(UUID.randomUUID().toString()));
+//
+//        final Map<String, List<Atm>> map = atms.stream().collect(Collectors.groupingBy(this::createKey));
+//
+//        try (final Connection conn = connectionPool.getDataSource()) {
+//            conn.setAutoCommit(false);
+//
+//            map.forEach((k, toSaveList) -> {
+//                if (toSaveList.isEmpty()) return;
+//
+//                Atm atm = toSaveList.get(0);
+//                final String areaId = atm.getArea() != null ? "area_id, " : "";
+//                final String streetId = atm.getStreet() != null ? "street_id, " : "";
+//                final String buildingId = atm.getBuilding() != null ? "building_id, " : "";
+//
+//                final String sql = "INSERT INTO atms (id, active, name, point, address, " +
+//                        areaId +
+//                        streetId +
+//                        buildingId +
+//                        "version) " +
+//
+//                toSaveList.
+//
+//                final String areaId = atm.getArea() != null ? "area_id, " : "";
+//                final String streetId = atm.getStreet() != null ? "street_id, " : "";
+//                final String buildingId = atm.getBuilding() != null ? "building_id, " : "";
+//
+//
+//                        "values (?, ?, ?, st_geomfromgeojson(?), ?, " +
+//                        (atm.getArea() != null ? "?, " : "") +
+//                        (atm.getStreet() != null ? "?, " : "") +
+//                        (atm.getBuilding() != null ? "?, " : "") +
+//                        "?) ";
+//
+//                try (final PreparedStatement statement = conn.prepareStatement(sql)) {
+//                    final AtomicInteger paramIndex = new AtomicInteger(0);
+//                    statement.setString(paramIndex.incrementAndGet(), atm.getId());
+//                    statement.setBoolean(paramIndex.incrementAndGet(), atm.isActive());
+//                    statement.setString(paramIndex.incrementAndGet(), atm.getName());
+//                    statement.setString(paramIndex.incrementAndGet(), PointMapper.pointToGeoJson(atm.getPoint()));
+//                    statement.setString(paramIndex.incrementAndGet(), atm.getAddress());
+//                    if (atm.getArea() != null) {
+//                        statement.setInt(paramIndex.incrementAndGet(), atm.getArea().getId());
+//                    }
+//                    if (atm.getStreet() != null) {
+//                        statement.setString(paramIndex.incrementAndGet(), atm.getStreet().getId());
+//                    }
+//                    if (atm.getBuilding() != null) {
+//                        statement.setString(paramIndex.incrementAndGet(), atm.getBuilding() != null ? atm.getBuilding().getId() : null);
+//                    }
+//                    statement.setLong(paramIndex.incrementAndGet(), 0L); // force to set 0 as initial version value
+//
+//                    statement.executeUpdate();
+//
+//
+//                    return get(atm.getId());
+//                }
+//
+//            });
+//            conn.commit();
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+    }
+
     @Override
     public Atm create(final Atm atm) {
         if (isEmpty(atm.getId())) {
@@ -110,20 +189,38 @@ public class AtmDtoPostgresImpl implements AtmDto {
         try (final Connection conn = connectionPool.getDataSource()) {
             conn.setAutoCommit(false);
 
-            final String sql = "INSERT INTO atms (id, active, name, point, address, area_id, street_id, building_id, version) " +
-                    "values (?, ?, ?, st_geomfromgeojson(?), ?, ?, ?, ?, ?) ";
+            final String areaId = atm.getArea() != null ? "area_id, " : "";
+            final String streetId = atm.getStreet() != null ? "street_id, " : "";
+            final String buildingId = atm.getBuilding() != null ? "building_id, " : "";
+
+            final String sql = "INSERT INTO atms (id, active, name, point, address, " +
+                    areaId +
+                    streetId +
+                    buildingId +
+                    "version) " +
+                    "values (?, ?, ?, st_geomfromgeojson(?), ?, " +
+                    (atm.getArea() != null ? "?, " : "") +
+                    (atm.getStreet() != null ? "?, " : "") +
+                    (atm.getBuilding() != null ? "?, " : "") +
+                    "?) ";
 
             try (final PreparedStatement statement = conn.prepareStatement(sql)) {
-                statement.setString(1, atm.getId());
-                statement.setBoolean(2, atm.isActive());
-                statement.setString(3, atm.getName());
-                statement.setString(4, PointMapper.pointToGeoJson(atm.getPoint()));
-                statement.setString(5, atm.getAddress());
-                statement.setInt(6, atm.getArea().getId());
-                statement.setString(7, atm.getStreet().getId());
-                statement.setString(8, atm.getBuilding() != null ? atm.getBuilding().getId() : null);
-//                statement.setLong(8, atm.getVersion());
-                statement.setLong(9, 0L); // force to set 0 as initial version value
+                final AtomicInteger paramIndex = new AtomicInteger(0);
+                statement.setString(paramIndex.incrementAndGet(), atm.getId());
+                statement.setBoolean(paramIndex.incrementAndGet(), atm.isActive());
+                statement.setString(paramIndex.incrementAndGet(), atm.getName());
+                statement.setString(paramIndex.incrementAndGet(), PointMapper.pointToGeoJson(atm.getPoint()));
+                statement.setString(paramIndex.incrementAndGet(), atm.getAddress());
+                if (atm.getArea() != null) {
+                    statement.setInt(paramIndex.incrementAndGet(), atm.getArea().getId());
+                }
+                if (atm.getStreet() != null) {
+                    statement.setString(paramIndex.incrementAndGet(), atm.getStreet().getId());
+                }
+                if (atm.getBuilding() != null) {
+                    statement.setString(paramIndex.incrementAndGet(), atm.getBuilding() != null ? atm.getBuilding().getId() : null);
+                }
+                statement.setLong(paramIndex.incrementAndGet(), 0L); // force to set 0 as initial version value
 
                 statement.executeUpdate();
                 conn.commit();
@@ -144,26 +241,37 @@ public class AtmDtoPostgresImpl implements AtmDto {
         try (final Connection conn = connectionPool.getDataSource()) {
             conn.setAutoCommit(false);
 
+            final String areaUpdate = atm.getArea() != null ? "area_id = ?, " : "";
+            final String streetUpdate = atm.getStreet() != null ? "street_id = ?, " : "";
+            final String buildingUpdate = atm.getStreet() != null ? "building_id = ?, " : "";
+
             final String sql = "UPDATE atms SET " +
                     "active = ?, " +
                     "name = ?, " +
                     "point = st_geomfromgeojson(?), " +
                     "address = ?, " +
-                    "area_id = ?, " +
-                    "street_id = ?, " +
-                    "building_id = ?, " +
+                    areaUpdate +
+                    streetUpdate +
+                    buildingUpdate +
                     "version = atms.version + 1 " +
                     "WHERE atms.id = ? "; // AND atms.version == ?
 
             try (final PreparedStatement statement = conn.prepareStatement(sql)) {
-                statement.setBoolean(1, atm.isActive());
-                statement.setString(2, atm.getName());
-                statement.setString(3, PointMapper.pointToGeoJson(atm.getPoint()));
-                statement.setString(4, atm.getAddress());
-                statement.setInt(5, atm.getArea().getId());
-                statement.setString(6, atm.getStreet().getId());
-                statement.setString(7, atm.getBuilding() != null ? atm.getBuilding().getId() : null);
-                statement.setString(8, atm.getId());
+                final AtomicInteger paramIndex = new AtomicInteger(0);
+                statement.setBoolean(paramIndex.incrementAndGet(), atm.isActive());
+                statement.setString(paramIndex.incrementAndGet(), atm.getName());
+                statement.setString(paramIndex.incrementAndGet(), PointMapper.pointToGeoJson(atm.getPoint()));
+                statement.setString(paramIndex.incrementAndGet(), atm.getAddress());
+                if (atm.getArea() != null) {
+                    statement.setInt(paramIndex.incrementAndGet(), atm.getArea().getId());
+                }
+                if (atm.getStreet() != null) {
+                    statement.setString(paramIndex.incrementAndGet(), atm.getStreet().getId());
+                }
+                if (atm.getBuilding() != null) {
+                    statement.setString(paramIndex.incrementAndGet(), atm.getBuilding() != null ? atm.getBuilding().getId() : null);
+                }
+                statement.setString(paramIndex.incrementAndGet(), atm.getId());
 
                 statement.executeUpdate();
                 conn.commit();

@@ -29,8 +29,12 @@ public class GeospatialKafkaProducer implements ProduceToProcess {
         final Config kafkaConnect = ConfUtils.load(KAFKA_CONNECT_CONFIG_FILE);
         final Config config = ConfUtils.load(PRODUCER_CONFIG_FILE);
 
-        final String bootstrapServers = ConfUtils.getStrVal(kafkaConnect, "kafkaBootstrapServers");
+        final String bootstrapServersHost = ConfUtils.getStrVal(kafkaConnect, "kafkaProducerHost");
+        final int bootstrapServersPort = Integer.parseInt(ConfUtils.getStrVal(kafkaConnect, "kafkaProducerPort"));
+        final String bootstrapServers = bootstrapServersHost + ":" + bootstrapServersPort;
         final String topic = config.getString("topic");
+
+        LOGGER.debug("Configure producer with bootstrapServers[{}]", bootstrapServers);
 
         final Properties properties = new Properties();
         properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);

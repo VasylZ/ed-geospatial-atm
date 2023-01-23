@@ -1,6 +1,9 @@
 {
   "topic" : "modification-processing",
-  "prod" : {
+  "docker" : {
+    "topic" : "modification-processing"
+  },
+  "dockerMySet" : {
     "topic" : "modification-processing"
   }
 }

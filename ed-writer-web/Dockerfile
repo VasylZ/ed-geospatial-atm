@@ -2,7 +2,6 @@
 FROM openjdk:11-jre-slim
 MAINTAINER vasyl.zarva@gmail.com
 
-ENV ENV_PROFILE="prod"
 ENV APP_HOME=/geospatial-atm
 
 RUN mkdir $APP_HOME

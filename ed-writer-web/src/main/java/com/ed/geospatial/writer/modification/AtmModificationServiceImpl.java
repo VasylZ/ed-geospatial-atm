@@ -33,12 +33,12 @@ public class AtmModificationServiceImpl implements AtmModificationService {
     private AtmVersioningService versioningService;
     @Inject
     private AtmDto atmDto;
-    @Inject
-    private AreaDao areaDao;
-    @Inject
-    private StreetDao streetDao;
-    @Inject
-    private BuildingDto buildingDto;
+//    @Inject
+//    private AreaDao areaDao;
+//    @Inject
+//    private StreetDao streetDao;
+//    @Inject
+//    private BuildingDto buildingDto;
 
     @Override
     public String create(Atm mo) {
@@ -108,18 +108,18 @@ public class AtmModificationServiceImpl implements AtmModificationService {
     }
 
     private void fillAddressInfo(Atm mo) {
-        Area area = areaDao.find(mo.getPoint());
-        if (area == null) {
-            throw new IllegalArgumentException("Point area not supported");
-        }
-        mo.setArea(area);
-
-        Street street = streetDao.find(mo.getPoint());
-        if (street == null) {
-            throw new IllegalArgumentException("Point street not supported");
-        }
-        mo.setStreet(street);
-
-        mo.setBuilding(buildingDto.find(mo.getPoint()));
+//        Area area = areaDao.find(mo.getPoint());
+//        if (area == null) {
+//            throw new IllegalArgumentException("Point area not supported");
+//        }
+//        mo.setArea(area);
+//
+//        Street street = streetDao.find(mo.getPoint());
+//        if (street == null) {
+//            throw new IllegalArgumentException("Point street not supported");
+//        }
+//        mo.setStreet(street);
+//
+//        mo.setBuilding(buildingDto.find(mo.getPoint()));
     }
 }

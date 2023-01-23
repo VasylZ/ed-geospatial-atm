@@ -1,0 +1,12 @@
+{
+  "aNamespace" : "gis",
+  "aSet" : "atm",
+  "docker" : {
+    "aNamespace" : "gis",
+    "aSet" : "atm"
+  },
+  "dockerMySet" : {
+    "aNamespace" : "gis",
+    "aSet" : "atm"
+  }
+}

@@ -1,6 +1,9 @@
 {
   "host" : "http://localhost:8081",
-  "prod" : {
+  "docker" : {
+    "host" : "http://localhost:8081"
+  },
+  "dockerMySet" : {
     "host" : "http://localhost:8081"
   }
 }

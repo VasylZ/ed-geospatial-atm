@@ -2,7 +2,12 @@
   "topic" : "modification-processing",
   "groupId" : "modificationGroup",
   "autoOffsetReset" : "earliest",
-  "prod" : {
+  "docker" : {
+    "topic" : "modification-processing",
+    "groupId" : "modificationGroup",
+    "autoOffsetReset" : "earliest"
+  },
+  "dockerMySet" : {
     "topic" : "modification-processing",
     "groupId" : "modificationGroup",
     "autoOffsetReset" : "earliest"

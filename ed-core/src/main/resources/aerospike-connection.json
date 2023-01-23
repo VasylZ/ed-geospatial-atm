@@ -1,8 +1,18 @@
 {
-  "aDbHost" : "localhost",
+  "aDbHost" : "192.168.2.10",
   "aDbPort" : 3000,
-  "aNamespace" : "gis",
-  "aSet" : "atm",
   "aMaxConnsPerNode" : 500,
-  "aConnPoolsPerNode" : 2
+  "aConnPoolsPerNode" : 2,
+  "docker" : {
+    "aDbHost" : "aerospike",
+    "aDbPort" : 3000,
+    "aMaxConnsPerNode" : 500,
+    "aConnPoolsPerNode" : 2
+  },
+  "dockerMySet" : {
+    "aDbHost" : "aerospike",
+    "aDbPort" : 3000,
+    "aMaxConnsPerNode" : 500,
+    "aConnPoolsPerNode" : 2
+  }
 }

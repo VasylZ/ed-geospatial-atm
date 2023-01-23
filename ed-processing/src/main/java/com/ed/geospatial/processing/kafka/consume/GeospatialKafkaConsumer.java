@@ -69,10 +69,15 @@ public class GeospatialKafkaConsumer implements ConsumeAndProcess {
         final Config kafkaConnect = ConfUtils.load(KAFKA_CONNECT_CONFIG_FILE);
         final Config config = ConfUtils.load(CONSUMER_CONFIG_FILE);
 
-        final String bootstrapServers = ConfUtils.getStrVal(kafkaConnect, "kafkaBootstrapServers");
+        final String bootstrapServersHost = ConfUtils.getStrVal(kafkaConnect, "kafkaConsumerHost");
+        final int bootstrapServersPort = Integer.parseInt(ConfUtils.getStrVal(kafkaConnect, "kafkaConsumerPort"));
+        final String bootstrapServers = bootstrapServersHost + ":" + bootstrapServersPort;
+
         final String topic = config.getString("topic");
         final String groupId = config.getString("groupId");
         final String autoOffsetReset = config.getString("autoOffsetReset");
+
+        LOGGER.debug("Configure consumer with bootstrapServers[{}]", bootstrapServers);
 
         final Properties properties = new Properties();
         properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);

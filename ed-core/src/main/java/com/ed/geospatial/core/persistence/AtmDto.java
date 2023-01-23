@@ -13,9 +13,11 @@ public interface AtmDto {
 
     long count(AtmQuery query);
 
+    List<Atm> create(List<Atm> atms);
+
     Atm create(Atm dto);
 
-    Atm update(Atm dto);
+    Atm update(Atm atm);
 
     void remove(String id);
 }

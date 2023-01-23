@@ -41,7 +41,7 @@ public class ReadWebJettyApp {
         final Server server = JettyHttpContainerFactory.createServer(URI.create(HOST_URI), config, false);
         LOGGER.info("Start server");
         server.start();
-        LOGGER.info("Server up and running");
+        LOGGER.info("Server up and running on [{}]", HOST_URI);
         return server;
     }
 
